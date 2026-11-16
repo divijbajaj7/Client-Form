@@ -1,0 +1,106 @@
+{
+  "entities": {
+    "SurveyResponse": {
+      "title": "SurveyResponse",
+      "description": "A single participant submission for the 'AI at Work: Where Are We Today?' readiness survey.",
+      "type": "object",
+      "properties": {
+        "q1Team": { "type": "string", "minLength": 1, "maxLength": 120 },
+        "q1TeamOther": { "type": "string", "maxLength": 200 },
+        "q2Role": { "type": "string", "minLength": 1, "maxLength": 120 },
+        "q3Frequency": { "type": "string", "minLength": 1, "maxLength": 120 },
+        "q4Tools": { "type": "array", "description": "Selected AI tools used for work." },
+        "q4ToolsOther": { "type": "string", "maxLength": 200 },
+        "q5Accounts": { "type": "string", "minLength": 1, "maxLength": 160 },
+        "q6UseCases": { "type": "array", "description": "Selected AI use cases at work." },
+        "q6UseCasesOther": { "type": "string", "maxLength": 200 },
+        "q7HelpfulTask": { "type": "string", "maxLength": 3000 },
+        "q8Confidence": { "type": "integer", "description": "Linear scale 1 to 5." },
+        "q9Techniques": { "type": "array", "description": "Prompting techniques used." },
+        "q10MarketShareQuestion": { "type": "string", "minLength": 1, "maxLength": 240 },
+        "q11OutputChecks": { "type": "array", "description": "How output is checked." },
+        "q11OutputChecksOther": { "type": "string", "maxLength": 200 },
+        "q12Blockers": { "type": "array", "description": "Up to 3 frustrations or blockers." },
+        "q12BlockersOther": { "type": "string", "maxLength": 200 },
+        "q13RepetitiveTask": { "type": "string", "minLength": 1, "maxLength": 3000 },
+        "q14WorkshopGoals": { "type": "array", "description": "Workshop expectations." },
+        "q14WorkshopGoalsOther": { "type": "string", "maxLength": 200 },
+        "source": { "type": "string", "minLength": 1, "maxLength": 60 },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": [
+        "q1Team",
+        "q1TeamOther",
+        "q2Role",
+        "q3Frequency",
+        "q4Tools",
+        "q4ToolsOther",
+        "q5Accounts",
+        "q6UseCases",
+        "q6UseCasesOther",
+        "q7HelpfulTask",
+        "q8Confidence",
+        "q9Techniques",
+        "q10MarketShareQuestion",
+        "q11OutputChecks",
+        "q11OutputChecksOther",
+        "q12Blockers",
+        "q12BlockersOther",
+        "q13RepetitiveTask",
+        "q14WorkshopGoals",
+        "q14WorkshopGoalsOther",
+        "source",
+        "createdAt"
+      ]
+    },
+    "ConsultationRequest": {
+      "title": "ConsultationRequest",
+      "description": "An enterprise training & mentorship discovery request from a corporate client.",
+      "type": "object",
+      "properties": {
+        "fullName": { "type": "string", "minLength": 2, "maxLength": 120 },
+        "workEmail": { "type": "string", "minLength": 5, "maxLength": 160 },
+        "company": { "type": "string", "minLength": 1, "maxLength": 160 },
+        "teamSize": { "type": "string", "minLength": 1, "maxLength": 60 },
+        "painPoints": { "type": "string", "minLength": 5, "maxLength": 3000 },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["fullName", "workEmail", "company", "teamSize", "painPoints", "createdAt"]
+    },
+    "SpreadsheetSettings": {
+      "title": "SpreadsheetSettings",
+      "description": "Metadata linking the dedicated Google Spreadsheet in Google Drive for survey responses.",
+      "type": "object",
+      "properties": {
+        "spreadsheetId": { "type": "string", "minLength": 5, "maxLength": 200 },
+        "spreadsheetTitle": { "type": "string", "minLength": 1, "maxLength": 200 },
+        "spreadsheetUrl": { "type": "string", "minLength": 10, "maxLength": 500 },
+        "syncedCount": { "type": "integer" },
+        "updatedBy": { "type": "string", "minLength": 1, "maxLength": 160 },
+        "updatedAt": { "type": "string", "format": "date-time" }
+      },
+      "required": [
+        "spreadsheetId",
+        "spreadsheetTitle",
+        "spreadsheetUrl",
+        "syncedCount",
+        "updatedBy",
+        "updatedAt"
+      ]
+    }
+  },
+  "firestore": {
+    "/survey_responses/{responseId}": {
+      "schema": { "$ref": "#/entities/SurveyResponse" },
+      "description": "Stores AI Readiness Survey responses submitted via the landing page or shared link."
+    },
+    "/consultation_requests/{requestId}": {
+      "schema": { "$ref": "#/entities/ConsultationRequest" },
+      "description": "Stores B2B discovery consultation inquiries submitted from the landing page."
+    },
+    "/settings/{settingId}": {
+      "schema": { "$ref": "#/entities/SpreadsheetSettings" },
+      "description": "Stores organizer Google Drive / Google Sheets integration metadata."
+    }
+  }
+}
